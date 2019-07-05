@@ -3,8 +3,11 @@
 set -e
 
 # prerequisites: ansible, git, curl
+# usage:
+# curl -s https://raw.githubusercontent.com/hleb-rubanau/ansible-role-docker/master/bootstrap.sh | /bin/bash
 
 PLAYBOOK_DIR="./ansible-role-docker-install"
+PLAYBOOK_FILE=docker-playbook.yml
 mkdir -v $PLAYBOOK_DIR
 cd $PLAYBOOK_DIR
 
@@ -14,7 +17,7 @@ cat > requirements.yml <<REQUIREMENTS
   name: docker
 REQUIREMENTS
 
-cat > playbook.yml << PLAYBOOK
+cat > $PLAYBOOK_FILE << PLAYBOOK
 ---
 - hosts: localhost
   roles:
@@ -30,6 +33,6 @@ cat <<USAGE
 Minimal ansible playbook created. To install docker, run the following commands:
 
 cd $PLAYBOOK_DIR
-ansible-playbook -i localhost, docker-playbok.yml
+ansible-playbook -i localhost, $PLAYBOOK_FILE
 USAGE
 
