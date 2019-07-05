@@ -33,6 +33,6 @@ cat <<USAGE
 Minimal ansible playbook created. To install docker, run the following commands:
 
 cd $PLAYBOOK_DIR
-ansible-playbook -i localhost, $PLAYBOOK_FILE
+ansible-playbook -i localhost, -c local $PLAYBOOK_FILE
 USAGE
 
