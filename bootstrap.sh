@@ -6,7 +6,7 @@ set -e
 # usage:
 # curl -s https://raw.githubusercontent.com/hleb-rubanau/ansible-role-docker/master/bootstrap.sh | /bin/bash
 
-PLAYBOOK_DIR="./ansible-role-docker-install"
+PLAYBOOK_DIR=$(mktemp -d ansible-docker-bootstrap.XXX )
 PLAYBOOK_FILE=docker-playbook.yml
 mkdir -v $PLAYBOOK_DIR
 cd $PLAYBOOK_DIR
@@ -24,15 +24,9 @@ cat > $PLAYBOOK_FILE << PLAYBOOK
     - docker
 PLAYBOOK
 
+echo "Bootstrapping docker from $PLAYBOOK_DIR" 
+
 set -x 
 ansible-galaxy install -r requirements.yml --roles-path ./roles
-set +x
-
-
-cat <<USAGE
-Minimal ansible playbook created. To install docker, run the following commands:
-
-cd $PLAYBOOK_DIR
 ansible-playbook -i localhost, -c local $PLAYBOOK_FILE
-USAGE
-
+rm -rv "$PLAYBOOK_DIR"
